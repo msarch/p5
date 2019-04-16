@@ -92,6 +92,7 @@ class Ten {
   void updateHSlider(float[] t) {
     horizontalSliderX = int(t[0]);
   }
+  
   void updateVSlider(float[] t) {
     verticalalSliderY = int(t[1]);
   }

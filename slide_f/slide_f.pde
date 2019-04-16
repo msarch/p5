@@ -15,6 +15,13 @@ int RADIUS1;
 int RADIUS2;
 float WHEEL_REV_PAR_SECOND = 0.5;
 
+  
+
+import processing.sound.*;
+SoundFile file;
+
+
+
 
 void setup() {
   fullScreen(P2D);
@@ -39,6 +46,10 @@ void setup() {
   //f = createFont("OpenSans-Light.ttf", 18);
   f = createFont("Monospaced", 12);
   textFont(f);
+  
+  // Load a soundfile from the /data folder of the sketch and play it back
+  file = new SoundFile(this, "click.wav");
+  file.play();
 }
 
 void updateAngle() {
