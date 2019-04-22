@@ -6,14 +6,10 @@ final color kyellow = color(255, 214, 0, 255);  //yellow kapla
 final color white   = color(255);
 final color[] kColors = { kred, kblue, kgreen, kyellow };
 
-
 class Cross {
   int xc = 0;
   int yc = 0; // position of group's center
   float scale = 1; 
-  // sliders positions
-  int horizontalSliderX = 0;
-  int verticalSliderY = 0;
   // size of the Kapla block
   float GLOBAL_RESIZE = (height / 89); 
   // 89 is total vertical exCrossts of drawing, sreen height is smaller than width
@@ -23,8 +19,12 @@ class Cross {
   int KC = int(GLOBAL_RESIZE *  6); // thickness  
   int LONG_OFFSET  = int(KA/2+KB/2+KC); 
   int SHORT_OFFSET = int(KB/2+KC/2);
-
-  color k1Color = (122);
+  int XTRAVEL=  int(KA + KB + KC); // horizontal slider travel extents
+  int YTRAVEL= int(0.5 * (KA + KB) + 1 * KC); // vertical slider travel extents
+  int horizontalSliderX = 0;    // sliders initial position
+  int verticalSliderY = 0;    // sliders initial position
+  color hColor;
+  color vColor;
   color[] basePalette = { kred, kblue, kgreen, kyellow };
   color[] currentPalette = { kred, kblue, kgreen, kyellow, kred, kblue, kgreen, kyellow };
 
@@ -34,6 +34,9 @@ class Cross {
     this.yc = yc;
     this.scale = scale;
     print ( "new cross : center = ", xc, yc, " ; scale = ", scale, "\n"); 
+    this.hColor = kred;
+    this.vColor = kblue;
+
   }
 
   //color[] currentPalette = randomizeColor();
@@ -57,7 +60,7 @@ class Cross {
     fill(currentPalette[3]);
     rect( LONG_OFFSET, -SHORT_OFFSET, KA, KC); // bottom right
 
-    fill(k1Color);
+    fill(hColor);
     rect(horizontalSliderX, 0, KA, KB); // horiz slider
 
     // 4+1 vertical rects
@@ -70,7 +73,7 @@ class Cross {
     fill(currentPalette[7]);
     rect( SHORT_OFFSET, -LONG_OFFSET, KC, KA); // bottom right
 
-    fill(k1Color);      
+    fill(vColor);      
     rect(0, verticalSliderY, KB, KA); // vert slider
 
     popMatrix();
@@ -92,11 +95,8 @@ class Cross {
     // use i
   }
 
-  void updateHSlider(float[] t) {
-    horizontalSliderX = int(t[0]);
-  }
-  
-  void updateVSlider(float[] t) {
-    verticalSliderY = int(t[0]);
+  void update(Wheel w) {
+    horizontalSliderX = int(XTRAVEL * w.trigo[0]);
+    verticalSliderY   = int(YTRAVEL * w.trigo[1]);
   }
 }
