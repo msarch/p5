@@ -4,18 +4,20 @@ final color kgreen  = color(  0, 99, 0, 255);   //green kapla
 final color kblue   = color(  0, 0, 140, 255);  //blue kapla
 final color kyellow = color(255, 214, 0, 255);  //yellow kapla
 final color white   = color(255);
-
 final color[] kColors = { kred, kblue, kgreen, kyellow };
 
 
-class Ten {
-  int xc = 100;
+class Cross {
+  int xc = 0;
   int yc = 0; // position of group's center
   float scale = 1; 
   // sliders positions
   int horizontalSliderX = 0;
-  int verticalalSliderY = 0;
+  int verticalSliderY = 0;
   // size of the Kapla block
+  float GLOBAL_RESIZE = (height / 89); 
+  // 89 is total vertical exCrossts of drawing, sreen height is smaller than width
+  // we scale the drawing relative to how many vertical units we need to fit scene
   int KA = int(GLOBAL_RESIZE * 33); // length
   int KB = int(GLOBAL_RESIZE * 11); // width
   int KC = int(GLOBAL_RESIZE *  6); // thickness  
@@ -27,10 +29,11 @@ class Ten {
   color[] currentPalette = { kred, kblue, kgreen, kyellow, kred, kblue, kgreen, kyellow };
 
 
-  Ten(int xc, int yc, float scale) {
+  Cross(int xc, int yc, float scale) {
     this.xc = xc;
     this.yc = yc;
     this.scale = scale;
+    print ( "new cross : center = ", xc, yc, " ; scale = ", scale, "\n"); 
   }
 
   //color[] currentPalette = randomizeColor();
@@ -68,7 +71,7 @@ class Ten {
     rect( SHORT_OFFSET, -LONG_OFFSET, KC, KA); // bottom right
 
     fill(k1Color);      
-    rect(0, verticalalSliderY, KB, KA); // vert slider
+    rect(0, verticalSliderY, KB, KA); // vert slider
 
     popMatrix();
   }
@@ -94,6 +97,6 @@ class Ten {
   }
   
   void updateVSlider(float[] t) {
-    verticalalSliderY = int(t[1]);
+    verticalSliderY = int(t[0]);
   }
 }

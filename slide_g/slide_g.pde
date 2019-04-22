@@ -2,7 +2,7 @@
 // declare those variables globally and init them in setup()
 int OX;
 int OY;
-boolean info_display_flag = false;
+boolean info_display_flag = true;
 boolean wheel_display_flag = false;
 boolean time_update_flag = false;
 PFont f; // display font
