@@ -22,7 +22,7 @@ class Wheel {
 
   //color[] currentPalette = randomizeColor();
   void display () {
-    if (show_mechanics) { 
+    if (showMechanics) { 
       stroke(bluePrint);
       strokeWeight(1);
       noFill();
@@ -41,7 +41,7 @@ class Wheel {
 
   int dt() {
     int elapsed;
-    if (!freeze) {
+    if (!freezeTime) {
       elapsed = (millis() - this.lastTime);
     } else {
       elapsed = (0);

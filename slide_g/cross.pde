@@ -1,3 +1,5 @@
+import java.lang.Math;
+
 // kapla_colors
 final color kred    = color(255, 69, 0, 255);   //red kapla
 final color kgreen  = color(  0, 99, 0, 255);   //green kapla
@@ -21,23 +23,43 @@ class Cross {
   int SHORT_OFFSET = int(KB/2+KC/2);
   int XTRAVEL=  int(KA + KB + KC); // horizontal slider travel extents
   int YTRAVEL= int(0.5 * (KA + KB) + 1 * KC); // vertical slider travel extents
-  int horizontalSliderX = 0;    // sliders initial position
-  int verticalSliderY = 0;    // sliders initial position
+  int horizontalSliderX;    // sliders initial position
+  int verticalSliderY;    // sliders initial position
+
   color hColor;
   color vColor;
   color[] basePalette = { kred, kblue, kgreen, kyellow };
   color[] currentPalette = { kred, kblue, kgreen, kyellow, kred, kblue, kgreen, kyellow };
 
+  int xDir;
+  int prevX;
+  int prevXDir;
+  int yDir;
+  int prevY;
+  int prevYDir;
 
-  Cross(int xc, int yc, float scale) {
+
+  Cross(int xc, int yc, float scale) 
+  {
     this.xc = xc;
     this.yc = yc;
     this.scale = scale;
     print ( "new cross : center = ", xc, yc, " ; scale = ", scale, "\n"); 
+
     this.hColor = kred;
     this.vColor = kblue;
-
+    
+    this.horizontalSliderX = 0;    // h slider initial
+    this.xDir = 0;
+    this.prevX = 0;
+    this.prevXDir = 0;
+    
+    this.verticalSliderY = 0; // vert slider
+    this.yDir = 0;
+    this.prevY = 0;
+    this.prevYDir = 0;
   }
+
 
   //color[] currentPalette = randomizeColor();
 
@@ -97,6 +119,20 @@ class Cross {
 
   void update(Wheel w) {
     horizontalSliderX = int(XTRAVEL * w.trigo[0]);
+    this.xDir = int(Math.signum(this.horizontalSliderX - this.prevX));
+    this.prevX = horizontalSliderX;
+    if (!(this.prevXDir == this.xDir)) {
+      klk = true;
+    }
+    this.prevXDir=this.xDir;
+    
     verticalSliderY   = int(YTRAVEL * w.trigo[1]);
+    this.yDir = int(Math.signum(this.verticalSliderY - this.prevY));
+    this.prevY = verticalSliderY;
+    if (!(this.prevYDir == this.yDir)) {
+      klk = true;
+    }
+    this.prevYDir=this.yDir;
+
   }
 }
